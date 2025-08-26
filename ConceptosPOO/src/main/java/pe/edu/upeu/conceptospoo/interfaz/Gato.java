@@ -12,8 +12,8 @@ public class Gato implements Animal {
         System.out.println("Zzz zzz...");
     }
         public String juega() {
-            return "le gusta jugar con el raton"
+            return "le gusta jugar con el raton";
         }
 
     }
-}
+
