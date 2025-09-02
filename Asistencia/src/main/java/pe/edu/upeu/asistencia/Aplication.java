@@ -2,8 +2,7 @@ package pe.edu.upeu.asistencia;
 
 public class Aplication {
     public static void main(String[] args) {
-        System.out.println("helloBH");
+        System.out.println("Hello BH");
         AsistenciaApplication.main(args);
     }
 }
-
