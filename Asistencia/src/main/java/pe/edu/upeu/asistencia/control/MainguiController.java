@@ -6,6 +6,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,50 @@ public class MainguiController {
     @FXML
     MenuItem menuItem1, menuItemC;
 
+    Menu menuEstilos=new Menu("Cambiar Estilos");
+    ComboBox<String> comboEstilo=new ComboBox<>();
+    CustomMenuItem customMenuItem=new CustomMenuItem(comboEstilo);
+
+
     @Autowired
     ApplicationContext context;
 
     @FXML
     public void initialize(){
+        comboEstilo.getItems().addAll("Estilo por defecto","Estilo Oscuro"
+                ,"Estilo Azul","Estilo Rosado", "Estilo Verde");
+        comboEstilo.setOnAction(e->cambiarEstilo());
+        customMenuItem.setHideOnClick(false);
+        menuEstilos.getItems().add(customMenuItem);
+        menuBar.getMenus().addAll(menuEstilos);
+
         MenuItemListener mIL=new MenuItemListener();
         menuItem1.setOnAction(mIL::handle);
         menuItemC.setOnAction(mIL::handle);
+        menuItem1.setOnAction(mIL::handle);
+        menuItemC.setOnAction(mIL::handle);
     }
-
+public void cambiarEstilo() {
+    String estilo = comboEstilo.getSelectionModel().getSelectedItem();
+    Scene scene = bp.getScene();
+    scene.getStylesheets().clear();
+    switch (estilo) {
+        case "Estilo Oscuro":
+            scene.getStylesheets().add(getClass().getResource("/css/estilo-oscuro.css").toExternalForm());
+            break;
+        case "Estilo Azul":
+            scene.getStylesheets().add(getClass().getResource("/css/estilo-azul.css").toExternalForm());
+            break;
+        case "Estilo Rosado":
+            scene.getStylesheets().add(getClass().getResource("/css/estilo-rosado.css").toExternalForm());
+            break;
+        case "Estilo Verde":
+            scene.getStylesheets().add(getClass().getResource("/css/estilo-verde.css").toExternalForm());
+            break;
+        default:
+            break;
+    }
+}
     class MenuItemListener{
         Map<String, String[]> menuConfig=Map.of(
             "menuItem1", new  String[]{"/fxml/main_participante.fxml", "Reg.Parcipante", "T"},
